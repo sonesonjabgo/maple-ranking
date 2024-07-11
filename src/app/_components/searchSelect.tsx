@@ -2,8 +2,10 @@
 import { Card } from "@nextui-org/react";
 import React, { useState } from "react";
 import { jobs, world_names } from "../../constants/rankConst";
+import { useRouter } from "next/navigation";
 
 export default function SearchSelect() {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     worldName: "",
     job: "",
@@ -11,7 +13,8 @@ export default function SearchSelect() {
 
   const submitHandler = (ev: React.FormEvent<HTMLFormElement>) => {
     ev.preventDefault();
-    console.log(formData);
+    const query = new URLSearchParams(formData).toString();
+    router.push("?" + query);
   };
 
   const handleWorldChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -31,7 +34,7 @@ export default function SearchSelect() {
   };
 
   return (
-    <Card className="p-5">
+    <Card className="p-5 mx-3 mb-2">
       <form
         className="flex justify-center items-center gap-5"
         onSubmit={submitHandler}
