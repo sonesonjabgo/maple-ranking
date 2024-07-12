@@ -2,16 +2,21 @@
 import { Card } from "@nextui-org/react";
 import React, { useState } from "react";
 import { jobs, world_names } from "../../constants/rankConst";
+import UseCustomSearchParams, {
+  NewParamsType,
+} from "../../hooks/useCustomSearchParams";
 
 export default function SearchSelect() {
-  const [formData, setFormData] = useState({
+  const { setSearchParams } = UseCustomSearchParams();
+
+  const [formData, setFormData] = useState<NewParamsType>({
     worldName: "",
     job: "",
   });
 
   const submitHandler = (ev: React.FormEvent<HTMLFormElement>) => {
     ev.preventDefault();
-    console.log(formData);
+    setSearchParams(formData);
   };
 
   const handleWorldChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -31,7 +36,7 @@ export default function SearchSelect() {
   };
 
   return (
-    <Card className="p-5">
+    <Card className="p-5 mx-3 mb-2">
       <form
         className="flex justify-center items-center gap-5"
         onSubmit={submitHandler}
