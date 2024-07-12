@@ -2,7 +2,7 @@
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React from "react";
 
-type NewParamsType = { [key: string]: string };
+export type NewParamsType = { worldName: string; job: string };
 
 export default function UseCustomSearchParams() {
   const router = useRouter();
@@ -19,7 +19,9 @@ export default function UseCustomSearchParams() {
   };
 
   const setSearchParams = (newParams: NewParamsType) => {
-    return router.push(`${pathName}?${setNewParams(newParams)}`);
+    const params = setNewParams(newParams);
+
+    return router.push(`${pathName}?${params}`);
   };
 
   return { searchParams: Object.fromEntries(searchParams), setSearchParams };

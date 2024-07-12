@@ -2,19 +2,21 @@
 import { Card } from "@nextui-org/react";
 import React, { useState } from "react";
 import { jobs, world_names } from "../../constants/rankConst";
-import { useRouter } from "next/navigation";
+import UseCustomSearchParams, {
+  NewParamsType,
+} from "../../hooks/useCustomSearchParams";
 
 export default function SearchSelect() {
-  const router = useRouter();
-  const [formData, setFormData] = useState({
+  const { setSearchParams } = UseCustomSearchParams();
+
+  const [formData, setFormData] = useState<NewParamsType>({
     worldName: "",
     job: "",
   });
 
   const submitHandler = (ev: React.FormEvent<HTMLFormElement>) => {
     ev.preventDefault();
-    const query = new URLSearchParams(formData).toString();
-    router.push("?" + query);
+    setSearchParams(formData);
   };
 
   const handleWorldChange = (event: React.ChangeEvent<HTMLSelectElement>) => {

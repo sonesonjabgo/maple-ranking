@@ -1,17 +1,24 @@
 import dayjs from "dayjs";
-import { RankProps } from "../types/rankType";
+import { RankProps } from "../../../types/rank.type";
+import UseCustomSearchParams from "../../../hooks/useCustomSearchParams";
+import { NextRequest } from "next/server";
 
 const API_KEY = process.env.NEXON_API_KEY;
 const urlString = `https://open.api.nexon.com/maplestory/v1/ranking/overall`;
 const now = dayjs().format("YYYY-MM-DD");
 
-export const fetchData = async (pageNum: number = 1): Promise<RankProps[]> => {
+const fetchData = async (pageNum: number = 1): Promise<RankProps[]> => {
+  const { searchParams, setSearchParams } = UseCustomSearchParams();
+
   const params = {
     date: now,
     page: String(pageNum),
+    world_name: searchParams.worldName,
   };
+
   const queryString = new URLSearchParams(params);
   const reqUrl = `${urlString}?${queryString}`;
+
   const res = await fetch(reqUrl, {
     headers: {
       "x-nxopen-api-key": API_KEY!,
@@ -22,3 +29,8 @@ export const fetchData = async (pageNum: number = 1): Promise<RankProps[]> => {
 
   return res.ranking;
 };
+
+export async function GET(request: NextRequest) {
+  const data = await fetchData();
+  return data;
+}
