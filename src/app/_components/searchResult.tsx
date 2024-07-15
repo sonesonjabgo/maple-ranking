@@ -43,16 +43,50 @@ const fetchRankData = async ({
 
 export default function SearchResult() {
   const [data, setData] = useState<RankProps[]>();
+  const [page, setPage] = useState(1);
 
   const params = useSearchParams();
   const jobParam = params.get("job");
   const worldNameParam = params.get("worldName");
 
+  const handleObserver = (entries: IntersectionObserverEntry[]) => {
+    const target = entries[0];
+    if (target.isIntersecting) {
+      setPage((prevPage) => prevPage + 1);
+    }
+  };
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(handleObserver, {
+      threshold: 0,
+    });
+    const observerTarget = document.getElementById("observer");
+    if (observerTarget) {
+      observer.observe(observerTarget);
+    }
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const data = await fetchRankData({
+        pageNum: String(page),
+        job: jobParam,
+        worldName: worldNameParam,
+      });
+      setData((prevData) => {
+        if (prevData) return [...prevData, ...data];
+        else return [...data];
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const data = await fetchRankData({
-          pageNum: "1",
+          pageNum: String(page),
           job: jobParam,
           worldName: worldNameParam,
         });
@@ -63,6 +97,25 @@ export default function SearchResult() {
     };
     fetchData();
   }, [params.toString()]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await fetchRankData({
+          pageNum: String(page),
+          job: jobParam,
+          worldName: worldNameParam,
+        });
+        setData((prevData) => {
+          if (prevData) return [...prevData, ...data];
+          else return [...data];
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchData();
+  }, [page]);
 
   return (
     <div className="flex flex-col items-center w-full gap-3">
@@ -76,6 +129,7 @@ export default function SearchResult() {
           character_popularity={rank.character_popularity}
         />
       ))}
+      <div id="observer" style={{ height: "10px" }}></div>
     </div>
   );
 }
