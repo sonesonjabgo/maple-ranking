@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import RankCard from "./card";
 import { RankProps } from "../../types/rank.type";
 import dayjs from "dayjs";
-import UseCustomSearchParams from "../../hooks/useCustomSearchParams";
 import { useSearchParams } from "next/navigation";
 
 const API_KEY = process.env.NEXT_PUBLIC_NEXON_API_KEY;
@@ -24,7 +23,7 @@ const fetchRankData = async ({
   const params = {
     date: now,
     page: String(pageNum),
-    ...(job && { job }),
+    ...(job && { class: job }),
     ...(worldName && { world_name: worldName }),
   };
 
@@ -47,7 +46,7 @@ export default function SearchResult() {
 
   const params = useSearchParams();
   const jobParam = params.get("job");
-  const worldNameParam = params.get("worldNameParam");
+  const worldNameParam = params.get("worldName");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -63,7 +62,7 @@ export default function SearchResult() {
       }
     };
     fetchData();
-  }, [params]);
+  }, [params.toString()]);
 
   return (
     <div className="flex flex-col items-center w-full gap-3">
