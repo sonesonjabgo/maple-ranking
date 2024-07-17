@@ -118,3 +118,5 @@ export const jobs = [
   "라라-전체 전직",
   "칼리-전체 전직",
 ];
+
+export const urlString = `https://open.api.nexon.com/maplestory/v1/ranking/overall`;

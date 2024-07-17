@@ -15,6 +15,7 @@
     "dayjs": "^1.11.11",
     "framer-motion": "^11.2.14",
     "next": "14.2.4",
+    "next-themes": "^0.3.0",
     "react": "^18",
     "react-dom": "^18",
     "sass": "^1.77.7"
