@@ -4,9 +4,10 @@ import RankCard from "./card";
 import { RankProps } from "../../types/rank.type";
 import dayjs from "dayjs";
 import { useSearchParams } from "next/navigation";
+import { urlString } from "../../constants/rankConst";
 
 const API_KEY = process.env.NEXT_PUBLIC_NEXON_API_KEY;
-const urlString = `https://open.api.nexon.com/maplestory/v1/ranking/overall`;
+
 const now = dayjs().format("YYYY-MM-DD");
 
 interface RankDataParams {
@@ -66,7 +67,7 @@ export default function SearchResult() {
     }
   }, []);
 
-  const fetchData = async () => {
+  const fetchData = async (append: boolean) => {
     try {
       const data = await fetchRankData({
         pageNum: String(page),
@@ -74,8 +75,11 @@ export default function SearchResult() {
         worldName: worldNameParam,
       });
       setData((prevData) => {
-        if (prevData) return [...prevData, ...data];
-        else return [...data];
+        if (append) {
+          return prevData ? [...prevData, ...data] : [...data];
+        } else {
+          return data;
+        }
       });
     } catch (error) {
       console.error(error);
@@ -83,38 +87,11 @@ export default function SearchResult() {
   };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await fetchRankData({
-          pageNum: String(page),
-          job: jobParam,
-          worldName: worldNameParam,
-        });
-        setData(data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchData();
+    fetchData(false);
   }, [params.toString()]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await fetchRankData({
-          pageNum: String(page),
-          job: jobParam,
-          worldName: worldNameParam,
-        });
-        setData((prevData) => {
-          if (prevData) return [...prevData, ...data];
-          else return [...data];
-        });
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchData();
+    fetchData(true);
   }, [page]);
 
   return (
