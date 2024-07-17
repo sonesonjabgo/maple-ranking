@@ -21,6 +21,7 @@ export default function Icon({ theme, onClick }: IconProps) {
   else
     return (
       <Image
+        className="dark:invert"
         width={30}
         height={30}
         onClick={onClick}

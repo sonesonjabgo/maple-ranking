@@ -3,6 +3,8 @@ import { Inter } from "next/font/google";
 import "./globals.scss";
 import { RootProvider } from "./rootProvider";
 import Darkmode from "./_components/darkmode";
+import Logo from "./_components/logo";
+import SearchBar from "./_components/searchBar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,9 +22,9 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <RootProvider>
-          <div className="w-full bg-red-300 dark:bg-slate-200 flex justify-center gap-5">
-            <div>Logo</div>
-            <div>Search Bar</div>
+          <div className="w-full bg-neutral-200 dark:bg-neutral-800 flex justify-center items-center gap-5">
+            <Logo />
+            <SearchBar />
             <Darkmode />
           </div>
           <div className={inter.className}>{children}</div>
