@@ -1,9 +1,7 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import { jobs, world_names } from "../../constants/rankConst";
-import UseCustomSearchParams, {
-  NewParamsType,
-} from "../../hooks/useCustomSearchParams";
+import UseCustomSearchParams from "../../hooks/useCustomSearchParams";
 
 export default function SearchSelect() {
   const { searchParams, setSearchParams } = UseCustomSearchParams();

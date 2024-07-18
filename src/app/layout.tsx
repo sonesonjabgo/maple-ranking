@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.scss";
 import { RootProvider } from "./rootProvider";
 import TopBar from "./_components/topBar";
+import Navigation from "./_components/navigation";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,8 +21,9 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <RootProvider>
-          <div className="w-full flex justify-center items-center bg-neutral-200 dark:bg-neutral-800">
+          <div className="w-full flex flex-col justify-center items-center bg-neutral-200 dark:bg-neutral-800">
             <TopBar />
+            <Navigation />
           </div>
           <div className={inter.className}>{children}</div>
         </RootProvider>
