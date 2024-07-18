@@ -50,17 +50,18 @@ export default function SearchResult() {
   const jobParam = params.get("job");
   const worldNameParam = params.get("worldName");
 
-  const handleObserver = (entries: IntersectionObserverEntry[]) => {
-    const target = entries[0];
-    if (target.isIntersecting) {
-      setPage((prevPage) => prevPage + 1);
-    }
-  };
-
   useEffect(() => {
+    const handleObserver = (entries: IntersectionObserverEntry[]) => {
+      const target = entries[0];
+      if (target.isIntersecting) {
+        setPage((prevPage) => prevPage + 1);
+      }
+    };
+
     const observer = new IntersectionObserver(handleObserver, {
-      threshold: 0,
+      threshold: 1,
     });
+
     const observerTarget = document.getElementById("observer");
     if (observerTarget) {
       observer.observe(observerTarget);
@@ -99,8 +100,10 @@ export default function SearchResult() {
       <table className="w-1/2 bg-white border border-gray-300 rounded-lg overflow-hidden dark:bg-neutral-800">
         <thead>
           <tr className="bg-neutral-200 dark:bg-neutral-950">
-            {rankingHeader.map((header) => (
-              <th className="py-2 px-4 border-b border-gray-300">{header}</th>
+            {rankingHeader.map((header, index) => (
+              <th key={index} className="py-2 px-4 border-b border-gray-300">
+                {header}
+              </th>
             ))}
           </tr>
         </thead>
@@ -108,9 +111,9 @@ export default function SearchResult() {
           {data?.map((rank, index) => (
             <RankCard
               key={index}
-              world_name={rank.world_name}
               ranking={rank.ranking}
               character_name={rank.character_name}
+              world_name={rank.world_name}
               character_level={rank.character_level}
               character_popularity={rank.character_popularity}
               character_guildname={rank.character_guildname}

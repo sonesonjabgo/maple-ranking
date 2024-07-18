@@ -10,22 +10,14 @@ type Props = {
 };
 
 export default function RankCard(props: Props) {
+  const data = Object.entries(props);
   return (
     <tr>
-      <td className="py-2 px-4 border-b border-gray-300">{props.ranking}</td>
-      <td className="py-2 px-4 border-b border-gray-300">
-        {props.character_name}
-      </td>
-      <td className="py-2 px-4 border-b border-gray-300">{props.world_name}</td>
-      <td className="py-2 px-4 border-b border-gray-300">
-        {props.character_level}
-      </td>
-      <td className="py-2 px-4 border-b border-gray-300">
-        {props.character_popularity}
-      </td>
-      <td className="py-2 px-4 border-b border-gray-300">
-        {props.character_guildname}
-      </td>
+      {data.map((data, index) => (
+        <td key={index} className="p-4 border-b border-gray-300">
+          {data[1]}
+        </td>
+      ))}
     </tr>
   );
 }
