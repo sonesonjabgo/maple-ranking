@@ -43,13 +43,16 @@ export default function SearchSelect() {
       >
         <div>
           <p>월드 명</p>
-          <select name="worldName" onChange={handleWorldChange}>
+          <div className="grid grid-cols-5 gap-1">
             {world_names.map((world, index) => (
-              <option key={index} value={world}>
+              <button
+                key={world}
+                className="border border-neutral-800 rounded-md p-1 text-sm"
+              >
                 {world}
-              </option>
+              </button>
             ))}
-          </select>
+          </div>
         </div>
         <div>
           <p>직업 및 전직</p>
