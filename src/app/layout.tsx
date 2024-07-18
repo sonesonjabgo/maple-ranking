@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.scss";
 import { RootProvider } from "./rootProvider";
-import SearchSelect from "./_components/searchSelect";
 import TopBar from "./_components/topBar";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -21,8 +20,9 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <RootProvider>
-          <TopBar />
-          <SearchSelect />
+          <div className="w-full flex justify-center items-center bg-neutral-200 dark:bg-neutral-800">
+            <TopBar />
+          </div>
           <div className={inter.className}>{children}</div>
         </RootProvider>
       </body>

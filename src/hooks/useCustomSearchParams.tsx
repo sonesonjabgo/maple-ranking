@@ -2,7 +2,7 @@
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React from "react";
 
-export type NewParamsType = { worldName: string; job: string };
+export type NewParamsType = { worldName?: string; job?: string };
 
 export default function UseCustomSearchParams() {
   const router = useRouter();

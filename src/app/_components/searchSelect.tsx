@@ -1,5 +1,4 @@
 "use client";
-import { Card } from "@nextui-org/react";
 import React, { useState } from "react";
 import { jobs, world_names } from "../../constants/rankConst";
 import UseCustomSearchParams, {
@@ -7,47 +6,28 @@ import UseCustomSearchParams, {
 } from "../../hooks/useCustomSearchParams";
 
 export default function SearchSelect() {
-  const { setSearchParams } = UseCustomSearchParams();
+  const { searchParams, setSearchParams } = UseCustomSearchParams();
 
-  const [formData, setFormData] = useState<NewParamsType>({
-    worldName: "",
-    job: "",
-  });
-
-  const submitHandler = (ev: React.FormEvent<HTMLFormElement>) => {
-    ev.preventDefault();
-    setSearchParams(formData);
-  };
-
-  const handleWorldChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedValue = event.target.value;
-    setFormData({
-      ...formData,
-      worldName: selectedValue === "전체" ? "" : selectedValue,
-    });
-  };
-
-  const handleJobChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedValue = event.target.value;
-    setFormData({
-      ...formData,
-      job: selectedValue === "전체" ? "" : selectedValue,
-    });
+  const isActive = (param: string) => {
+    return Object.values(searchParams).includes(param);
   };
 
   return (
-    <Card className="p-5 mx-3 mb-2">
-      <form
-        className="flex justify-center items-center gap-5"
-        onSubmit={submitHandler}
-      >
+    <div className="w-full p-5 flex flex-col items-center">
+      <div className="w-1/2 flex flex-col gap-5">
         <div>
           <p>월드 명</p>
-          <div className="grid grid-cols-5 gap-1">
-            {world_names.map((world, index) => (
+          <div className="flex flex-wrap gap-1">
+            {world_names.map((world) => (
               <button
                 key={world}
-                className="border border-neutral-800 rounded-md p-1 text-sm"
+                onClick={() => {
+                  if (world !== "전체") setSearchParams({ worldName: world });
+                  else setSearchParams({ worldName: "" });
+                }}
+                className={`border border-neutral-500 dark:border-neutral-500 rounded-md p-1 text-sm ${
+                  isActive(world) ? "bg-blue-400" : ""
+                }`}
               >
                 {world}
               </button>
@@ -56,18 +36,49 @@ export default function SearchSelect() {
         </div>
         <div>
           <p>직업 및 전직</p>
-          <select name="job" onChange={handleJobChange}>
-            {jobs.map((job, index) => (
-              <option key={index} value={job}>
-                {job}
-              </option>
-            ))}
-          </select>
+          <div className="flex flex-wrap  gap-1">
+            <button
+              onClick={() => {
+                setSearchParams({ job: "" });
+              }}
+              className="border border-neutral-500 dark:border-neutral-500 rounded-md p-1 text-sm"
+            >
+              전체
+            </button>
+            {jobs.map((job, index) => {
+              const jobSplit = job.split("-");
+              if (jobSplit[1] !== "전체 전직")
+                return (
+                  <button
+                    key={index}
+                    onClick={() => {
+                      setSearchParams({ job: job });
+                    }}
+                    className={`border border-neutral-500 dark:border-neutral-500 rounded-md p-1 text-sm ${
+                      isActive(job) ? "bg-blue-400" : ""
+                    }`}
+                  >
+                    {jobSplit[1]}
+                  </button>
+                );
+              else
+                return (
+                  <button
+                    key={index}
+                    onClick={() => {
+                      setSearchParams({ job: job });
+                    }}
+                    className={`border border-neutral-500 dark:border-neutral-500 rounded-md p-1 text-sm ${
+                      isActive(job) ? "bg-blue-400" : ""
+                    }`}
+                  >
+                    {jobSplit[0]}
+                  </button>
+                );
+            })}
+          </div>
         </div>
-        <button className="bg-orange-400 rounded-lg w-20 h-14" type="submit">
-          랭킹 검색
-        </button>
-      </form>
-    </Card>
+      </div>
+    </div>
   );
 }
