@@ -1,12 +1,13 @@
 import React from "react";
-import SearchResult from "../_components/searchResult";
-import SearchSelect from "../_components/searchSelect";
+import SearchBar from "../_components/searchBar";
 
-export default async function Home() {
+export default function Home() {
   return (
-    <>
-      <SearchSelect />
-      <SearchResult />
-    </>
+    <div className="flex justify-center items-center">
+      <div>
+        <div>Home</div>
+        <SearchBar />
+      </div>
+    </div>
   );
 }

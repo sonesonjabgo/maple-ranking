@@ -1,6 +1,7 @@
 "use client";
 import { useTheme } from "next-themes";
-import Icon from "./icon";
+import Image from "next/image";
+import { icon } from "../../constants/darkmodeIcon";
 
 export default function Darkmode() {
   const { theme, setTheme } = useTheme();
@@ -11,8 +12,25 @@ export default function Darkmode() {
   };
 
   return (
-    <div>
-      <Icon theme={theme} onClick={Onclick} />
+    <div className="cursor-pointer">
+      {theme !== "light" ? (
+        <Image
+          className="dark:invert"
+          width={30}
+          height={30}
+          onClick={Onclick}
+          src={icon.dark}
+          alt="darkmode"
+        />
+      ) : (
+        <Image
+          width={30}
+          height={30}
+          onClick={Onclick}
+          src={icon.normal}
+          alt="darkmode"
+        />
+      )}
     </div>
   );
 }

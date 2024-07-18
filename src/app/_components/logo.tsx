@@ -7,7 +7,7 @@ export default function Logo() {
   return (
     <div>
       <Link href="/">
-        <Image src={mushroom} alt="logo" width={70}></Image>
+        <Image src={mushroom} alt="logo" width={70} priority></Image>
       </Link>
     </div>
   );
