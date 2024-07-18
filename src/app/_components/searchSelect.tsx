@@ -23,7 +23,7 @@ export default function SearchSelect() {
                   if (world !== "전체") setSearchParams({ worldName: world });
                   else setSearchParams({ worldName: "" });
                 }}
-                className={`border border-neutral-500 dark:border-neutral-500 rounded-md p-1 text-sm ${
+                className={`border border-neutral-500 dark:border-neutral-500 rounded-md p-1 text-sm hover:bg-gray-200 ${
                   isActive(world) ? "bg-blue-400" : ""
                 }`}
               >
@@ -39,7 +39,7 @@ export default function SearchSelect() {
               onClick={() => {
                 setSearchParams({ job: "" });
               }}
-              className="border border-neutral-500 dark:border-neutral-500 rounded-md p-1 text-sm"
+              className="border border-neutral-500 dark:border-neutral-500 rounded-md p-1 text-sm hover:bg-gray-200"
             >
               전체
             </button>
@@ -52,7 +52,7 @@ export default function SearchSelect() {
                     onClick={() => {
                       setSearchParams({ job: job });
                     }}
-                    className={`border border-neutral-500 dark:border-neutral-500 rounded-md p-1 text-sm ${
+                    className={`border border-neutral-500 dark:border-neutral-500 rounded-md p-1 text-sm hover:bg-gray-200 ${
                       isActive(job) ? "bg-blue-400" : ""
                     }`}
                   >

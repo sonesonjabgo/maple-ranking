@@ -1,3 +1,12 @@
+export const rankingHeader = [
+  "순위",
+  "캐릭터 명",
+  "서버",
+  "레벨",
+  "인기도",
+  "길드",
+];
+
 export const world_names = [
   "전체",
   "스카니아",

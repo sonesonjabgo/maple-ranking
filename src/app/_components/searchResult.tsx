@@ -4,7 +4,7 @@ import RankCard from "./card";
 import { RankProps } from "../../types/rank.type";
 import dayjs from "dayjs";
 import { useSearchParams } from "next/navigation";
-import { urlString } from "../../constants/rankConst";
+import { rankingHeader, urlString } from "../../constants/rankConst";
 
 const API_KEY = process.env.NEXT_PUBLIC_NEXON_API_KEY;
 
@@ -96,16 +96,29 @@ export default function SearchResult() {
 
   return (
     <div className="flex flex-col items-center w-full gap-3">
-      {data?.map((rank, index) => (
-        <RankCard
-          key={index}
-          world_name={rank.world_name}
-          ranking={rank.ranking}
-          character_name={rank.character_name}
-          character_level={rank.character_level}
-          character_popularity={rank.character_popularity}
-        />
-      ))}
+      <table className="w-1/2 bg-white border border-gray-300 rounded-lg overflow-hidden dark:bg-neutral-800">
+        <thead>
+          <tr className="bg-neutral-200 dark:bg-neutral-950">
+            {rankingHeader.map((header) => (
+              <th className="py-2 px-4 border-b border-gray-300">{header}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {data?.map((rank, index) => (
+            <RankCard
+              key={index}
+              world_name={rank.world_name}
+              ranking={rank.ranking}
+              character_name={rank.character_name}
+              character_level={rank.character_level}
+              character_popularity={rank.character_popularity}
+              character_guildname={rank.character_guildname}
+            />
+          ))}
+        </tbody>
+      </table>
+
       <div id="observer" style={{ height: "10px" }}></div>
     </div>
   );
